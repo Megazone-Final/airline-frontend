@@ -1,0 +1,7 @@
+import client from './client';
+
+export const register = (data) => client.post('/users/register', data);
+
+export const login = (data) => client.post('/users/login', data);
+
+export const getProfile = () => client.get('/users/profile');

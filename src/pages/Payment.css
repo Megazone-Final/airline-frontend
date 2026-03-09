@@ -1,0 +1,226 @@
+/* ---------- Payment Layout ---------- */
+.payment-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: var(--space-8);
+    align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+    .payment-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------- Card Preview ---------- */
+.card-preview {
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    aspect-ratio: 1.6 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #ffffff;
+}
+
+.card-chip {
+    width: 36px;
+    height: 26px;
+    background: linear-gradient(135deg, #d4af37, #f5d76e);
+    border-radius: 4px;
+}
+
+.card-number-display {
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    font-family: 'Courier New', monospace;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-label {
+    display: block;
+    font-size: 0.55rem;
+    opacity: 0.6;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+}
+
+.card-holder-name {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+/* ---------- Payment Form ---------- */
+.payment-card-form h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-5);
+    color: var(--color-primary);
+}
+
+.payment-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+/* ---------- Summary ---------- */
+.payment-summary {
+    position: sticky;
+    top: calc(var(--navbar-height) + var(--space-4));
+    opacity: 0;
+}
+
+.payment-summary h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-5);
+    color: var(--color-primary);
+}
+
+.summary-flight-info,
+.summary-prices {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.sfi-row,
+.sp-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-sm);
+}
+
+.sfi-label {
+    color: var(--color-text-muted);
+}
+
+.sp-row {
+    color: var(--color-text-secondary);
+}
+
+.summary-divider {
+    height: 1px;
+    background: var(--color-border-light);
+    margin: var(--space-4) 0;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    margin-bottom: var(--space-5);
+}
+
+.total-amount {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.pay-btn {
+    width: 100%;
+    margin-bottom: var(--space-3);
+}
+
+.pay-spinner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.payment-notice {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* ---------- Success ---------- */
+.payment-success {
+    text-align: center;
+    padding: var(--space-16) 0;
+}
+
+.success-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-5);
+}
+
+.payment-success h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-success);
+    margin-bottom: var(--space-2);
+}
+
+.payment-success>p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+}
+
+.success-details {
+    max-width: 480px;
+    margin: 0 auto var(--space-8);
+    text-align: left;
+}
+
+.success-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-3) 0;
+    font-size: var(--font-size-sm);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.success-row:last-child {
+    border-bottom: none;
+}
+
+.success-row span {
+    color: var(--color-text-muted);
+}
+
+.success-row.total strong {
+    color: var(--color-primary);
+    font-size: var(--font-size-lg);
+}
+
+.success-actions {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+}
+
+/* ---------- Empty ---------- */
+.payment-empty {
+    text-align: center;
+    padding: var(--space-20) 0;
+}
+
+.payment-empty h2 {
+    margin-bottom: var(--space-3);
+    color: var(--color-text);
+}
+
+.payment-empty p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+}
+
+@media (max-width: 768px) {
+    .success-actions {
+        flex-direction: column;
+    }
+}

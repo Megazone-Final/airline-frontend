@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airline-front
+  labels:
+    app: airline-front
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: airline-front
+  template:
+    metadata:
+      labels:
+        app: airline-front
+    spec:
+      containers:
+        - name: airline-front
+          image: airline-front:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10

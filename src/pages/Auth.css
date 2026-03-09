@@ -1,0 +1,88 @@
+/* ---------- Auth Pages (Login & Register) ---------- */
+.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--navbar-height));
+    padding: var(--space-8) 0;
+    background: var(--color-bg-secondary);
+}
+
+.auth-wrapper {
+    width: 100%;
+    max-width: 440px;
+}
+
+.auth-card {
+    border-radius: var(--radius-lg);
+    padding: var(--space-10);
+    background: #ffffff;
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-md);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.auth-icon {
+    display: none;
+}
+
+.auth-header h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+}
+
+.auth-header p {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.auth-error-banner {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-5);
+    text-align: center;
+}
+
+.auth-success-banner {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-success);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-5);
+    text-align: center;
+}
+
+.auth-submit {
+    width: 100%;
+    margin-top: var(--space-4);
+}
+
+.auth-footer-text {
+    text-align: center;
+    margin-top: var(--space-6);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.auth-footer-text a {
+    font-weight: 600;
+    color: var(--color-primary-light);
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: var(--space-6);
+    }
+}
