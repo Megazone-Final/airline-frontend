@@ -113,8 +113,8 @@ export default function Home() {
                     <h2 className="section-title">인기 노선</h2>
                     <div className="routes-grid">
                         {[
-                            { from: '인천 ICN', to: '도쿄 NRT', price: '189,000' },
-                            { from: '인천 ICN', to: '오사카 KIX', price: '165,000' },
+                            { from: '인천 ICN', to: '도쿄 NRT', price: '200,000' },
+                            { from: '인천 ICN', to: '오사카 KIX', price: '180,000' },
                             { from: '인천 ICN', to: '방콕 BKK', price: '285,000' },
                             { from: '김포 GMP', to: '제주 CJU', price: '68,000' },
                         ].map((route, i) => (
