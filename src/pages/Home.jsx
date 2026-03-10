@@ -116,7 +116,7 @@ export default function Home() {
                             { from: '인천 ICN', to: '도쿄 NRT', price: '200,000' },
                             { from: '인천 ICN', to: '오사카 KIX', price: '180,000' },
                             { from: '인천 ICN', to: '방콕 BKK', price: '285,000' },
-                            { from: '김포 GMP', to: '제주 CJU', price: '68,000' },
+                            { from: '김포 GMP', to: '제주 CJU', price: '100,000' },
                         ].map((route, i) => (
                             <div key={i} className="route-card" onClick={() => navigate('/flights')}>
                                 <div className="route-cities">
