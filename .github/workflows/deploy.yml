@@ -20,7 +20,7 @@ jobs:
               uses: aws-actions/configure-aws-credentials@v4
               with:
                   role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-                  role-session-name: github-actions-deploy
+                  role-session-name: github-actions-deploys
                   aws-region: ap-northeast-2
 
             - name: Setup Node.js
@@ -36,7 +36,7 @@ jobs:
 
             - name: Deploy to S3
               run: |
-                  aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
+                  aws s3 sync dist/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
 
             - name: CloudFront Invalidation
               run: |
