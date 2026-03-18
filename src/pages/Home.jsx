@@ -8,6 +8,38 @@ export default function Home() {
     const [arrival, setArrival] = useState('');
     const [date, setDate] = useState('');
 
+    // [추가] 결제 테스트 API 호출 함수
+    const handlePaymentTest = async () => {
+        try {
+            const response = await fetch('/api/payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: 'PAY-' + Date.now(),
+                    user_id: 1213,
+                    reservation_id: 'REV-' + Math.random().toString(36).substr(2, 9),
+                    flight_id: 10,
+                    amount: 75000,
+                    method: 'CARD',
+                    status: 'SUCCESS',
+                    travel_date: '2026-03-25',
+                    passenger_count: 1
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert('✅ 결제 데이터가 RDS에 성공적으로 삽입되었습니다!');
+                console.log('Success:', data);
+            } else {
+                throw new Error('결제 실패');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ 결제 실패 (로그 확인 필요)');
+        }
+    };
+
     const handleSearch = (e) => {
         e.preventDefault();
         const params = new URLSearchParams();
@@ -19,7 +51,6 @@ export default function Home() {
 
     return (
         <div className="home">
-            {/* Hero */}
             <section className="hero">
                 <div className="hero-overlay"></div>
                 <div className="hero-content container">
@@ -31,7 +62,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Search Bar */}
             <section className="search-section container">
                 <form className="home-search" onSubmit={handleSearch}>
                     <div className="hs-field">
@@ -69,7 +99,7 @@ export default function Home() {
                 </form>
             </section>
 
-            {/* Quick Links */}
+            {/* Quick Links - 여기에 버튼 UI가 추가됩니다 */}
             <section className="quick-links container">
                 <div className="ql-grid">
                     <div className="ql-card" onClick={() => navigate('/flights')}>
@@ -81,6 +111,20 @@ export default function Home() {
                         <h3>항공편 조회</h3>
                         <p>출발지, 도착지, 날짜로 항공편을 검색하세요</p>
                     </div>
+
+                    {/* [새로 추가된 버튼 카드] */}
+                    <div className="ql-card" onClick={handlePaymentTest} style={{ cursor: 'pointer', border: '2px solid #007bff' }}>
+                        <div className="ql-icon-wrap">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007bff" strokeWidth="1.5">
+                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                <line x1="2" y1="10" x2="22" y2="10" />
+                                <path d="M16 14l2 2 4-4" />
+                            </svg>
+                        </div>
+                        <h3 style={{ color: '#007bff' }}>결제 테스트</h3>
+                        <p>클릭 시 RDS Proxy를 통해 데이터를 삽입합니다</p>
+                    </div>
+
                     <div className="ql-card" onClick={() => navigate('/mypage')}>
                         <div className="ql-icon-wrap">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -92,22 +136,9 @@ export default function Home() {
                         <h3>예약 확인</h3>
                         <p>예약 내역과 결제 상태를 확인하세요</p>
                     </div>
-                    <div className="ql-card" onClick={() => navigate('/register')}>
-                        <div className="ql-icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
-                                <circle cx="9" cy="7" r="4" />
-                                <line x1="19" y1="8" x2="19" y2="14" />
-                                <line x1="22" y1="11" x2="16" y2="11" />
-                            </svg>
-                        </div>
-                        <h3>회원가입</h3>
-                        <p>SkyWing 회원이 되어 더 많은 혜택을 누리세요</p>
-                    </div>
                 </div>
             </section>
 
-            {/* Popular Routes */}
             <section className="popular-section">
                 <div className="container">
                     <h2 className="section-title">인기 노선</h2>
