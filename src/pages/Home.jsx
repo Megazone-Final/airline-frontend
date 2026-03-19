@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createPayment } from '../api/payment';
 import './Home.css';
 
 export default function Home() {
@@ -8,28 +7,6 @@ export default function Home() {
     const [departure, setDeparture] = useState('');
     const [arrival, setArrival] = useState('');
     const [date, setDate] = useState('');
-
-    // [추가] 결제 테스트 API 호출 함수
-    const handlePaymentTest = async () => {
-        try {
-            const response = await createPayment({
-                flightId: 10,
-                date: '2026-03-25',
-                passengers: [{ firstName: '홍길동', lastName: '홍', birth: '1990-01-01', gender: 'M', passport: 'M12345678', nationality: 'KR' }],
-                totalAmount: 75000,
-            });
-
-            if (response && response.data) {
-                alert('✅ 결제 데이터가 RDS에 성공적으로 삽입되었습니다!');
-                console.log('Success:', response.data);
-            } else {
-                throw new Error('결제 실패');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('❌ 결제 실패 (로그 확인 필요)');
-        }
-    };
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -103,17 +80,16 @@ export default function Home() {
                         <p>출발지, 도착지, 날짜로 항공편을 검색하세요</p>
                     </div>
 
-                    {/* [새로 추가된 버튼 카드] */}
-                    <div className="ql-card" onClick={handlePaymentTest} style={{ cursor: 'pointer', border: '2px solid #007bff' }}>
+                    <div className="ql-card" onClick={() => navigate('/register')}>
                         <div className="ql-icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007bff" strokeWidth="1.5">
-                                <rect x="2" y="5" width="20" height="14" rx="2" />
-                                <line x1="2" y1="10" x2="22" y2="10" />
-                                <path d="M16 14l2 2 4-4" />
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                                <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z" />
                             </svg>
                         </div>
-                        <h3 style={{ color: '#007bff' }}>결제 테스트</h3>
-                        <p>클릭 시 RDS Proxy를 통해 데이터를 삽입합니다</p>
+                        <h3>회원가입</h3>
+                        <p>SkyWing Airlines 계정을 만들고 서비스를 시작하세요</p>
                     </div>
 
                     <div className="ql-card" onClick={() => navigate('/mypage')}>
