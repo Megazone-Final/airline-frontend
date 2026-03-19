@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createPayment } from '../api/payment';
 import './Home.css';
 
 export default function Home() {
@@ -11,26 +12,16 @@ export default function Home() {
     // [추가] 결제 테스트 API 호출 함수
     const handlePaymentTest = async () => {
         try {
-            const response = await fetch('/api/payment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    id: 'PAY-' + Date.now(),
-                    user_id: 1213,
-                    reservation_id: 'REV-' + Math.random().toString(36).substr(2, 9),
-                    flight_id: 10,
-                    amount: 75000,
-                    method: 'CARD',
-                    status: 'SUCCESS',
-                    travel_date: '2026-03-25',
-                    passenger_count: 1
-                })
+            const response = await createPayment({
+                flightId: 10,
+                date: '2026-03-25',
+                passengers: [{ firstName: '홍길동', lastName: '홍', birth: '1990-01-01', gender: 'M', passport: 'M12345678', nationality: 'KR' }],
+                totalAmount: 75000,
             });
 
-            if (response.ok) {
-                const data = await response.json();
+            if (response && response.data) {
                 alert('✅ 결제 데이터가 RDS에 성공적으로 삽입되었습니다!');
-                console.log('Success:', data);
+                console.log('Success:', response.data);
             } else {
                 throw new Error('결제 실패');
             }
