@@ -1,5 +1,7 @@
 import client from './client';
 
-export const searchFlights = (params) => client.get('/flights', { params });
+const FLIGHT_BASE = '/api/flight';
 
-export const getFlightDetail = (id) => client.get(`/flights/${id}`);
+export const searchFlights = (params) => client.get(FLIGHT_BASE, { params });
+
+export const getFlightDetail = (id) => client.get(`${FLIGHT_BASE}/${id}`);

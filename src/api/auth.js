@@ -1,9 +1,11 @@
 import client from './client';
 
-export const register = (data) => client.post('/auth/users/register', data);
+const AUTH_BASE = '/api/auth/users';
 
-export const login = (data) => client.post('/auth/users/login', data);
+export const register = (data) => client.post(`${AUTH_BASE}/register`, data);
 
-export const getProfile = () => client.get('/auth/users/profile');
+export const login = (data) => client.post(`${AUTH_BASE}/login`, data);
 
-export const logout = () => client.post('/auth/users/logout');
+export const getProfile = () => client.get(`${AUTH_BASE}/profile`);
+
+export const logout = () => client.post(`${AUTH_BASE}/logout`);

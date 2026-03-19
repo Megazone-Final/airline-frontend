@@ -1,5 +1,7 @@
 import client from './client';
 
-export const getReservations = () => client.get('/reservations');
+const RESERVATION_BASE = '/api/flight/reservations';
 
-export const getReservation = (id) => client.get(`/reservations/${id}`);
+export const getReservations = () => client.get(RESERVATION_BASE);
+
+export const getReservation = (id) => client.get(`${RESERVATION_BASE}/${id}`);

@@ -20,10 +20,10 @@ POST   https://izones.cloud/api/auth/users/register
 POST   https://izones.cloud/api/auth/users/login
 GET    https://izones.cloud/api/auth/users/profile
 POST   https://izones.cloud/api/auth/users/logout
-GET    https://izones.cloud/api/flights?departure={code}&arrival={code}&date={YYYY-MM-DD}&passengers={n}
-GET    https://izones.cloud/api/flights/{id}
-GET    https://izones.cloud/api/reservations
-GET    https://izones.cloud/api/reservations/{id}
+GET    https://izones.cloud/api/flight?departure={code}&arrival={code}&date={YYYY-MM-DD}&passengers={n}
+GET    https://izones.cloud/api/flight/{id}
+GET    https://izones.cloud/api/flight/reservations
+GET    https://izones.cloud/api/flight/reservations/{id}
 POST   https://izones.cloud/api/payment
 GET    https://izones.cloud/api/payment/{id}
 GET    https://izones.cloud/api/payment
@@ -137,14 +137,14 @@ Authorization: Bearer {token}
 
 ---
 
-## 2. Flight Service (`/api/flights`, `/api/reservations`)
+## 2. Flight Service (`/api/flight`, `/api/flight/reservations`)
 
 항공편 검색, 상세 조회, 예약 관리
 
 ### 2.1 항공편 검색
 
 ```
-GET /api/flights?departure={code}&arrival={code}&date={YYYY-MM-DD}&passengers={n}
+GET /api/flight?departure={code}&arrival={code}&date={YYYY-MM-DD}&passengers={n}
 ```
 
 **Query Parameters**
@@ -178,7 +178,7 @@ GET /api/flights?departure={code}&arrival={code}&date={YYYY-MM-DD}&passengers={n
 ### 2.2 항공편 상세 조회
 
 ```
-GET /api/flights/{id}
+GET /api/flight/{id}
 ```
 
 **Response `200 OK`**
@@ -205,7 +205,7 @@ GET /api/flights/{id}
 ### 2.3 예약 목록 조회
 
 ```
-GET /api/reservations
+GET /api/flight/reservations
 Authorization: Bearer {token}
 ```
 
@@ -232,7 +232,7 @@ Authorization: Bearer {token}
 ### 2.4 예약 상세 조회
 
 ```
-GET /api/reservations/{id}
+GET /api/flight/reservations/{id}
 Authorization: Bearer {token}
 ```
 
