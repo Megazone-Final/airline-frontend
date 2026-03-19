@@ -1,4 +1,4 @@
-# SkyWing Airlines — API Specification
+﻿# SkyWing Airlines — API Specification
 
 > 백엔드 MSA 3개 서비스에 대한 REST API 명세
 
@@ -8,19 +8,37 @@
 
 ```
 프론트엔드 → API Gateway (Ingress) → 각 서비스
-Base: /api
+Base: https://izones.cloud/api
 ```
 
 ---
 
-## 1. User Service (`/api/users`)
+## Full URLs
+
+```
+POST   https://izones.cloud/api/auth/users/register
+POST   https://izones.cloud/api/auth/users/login
+GET    https://izones.cloud/api/auth/users/profile
+POST   https://izones.cloud/api/auth/users/logout
+GET    https://izones.cloud/api/flights?departure={code}&arrival={code}&date={YYYY-MM-DD}&passengers={n}
+GET    https://izones.cloud/api/flights/{id}
+GET    https://izones.cloud/api/reservations
+GET    https://izones.cloud/api/reservations/{id}
+POST   https://izones.cloud/api/payment
+GET    https://izones.cloud/api/payment/{id}
+GET    https://izones.cloud/api/payment
+```
+
+---
+
+## 1. User Service (`/api/auth/users`)
 
 회원가입, 로그인, 프로필 관리
 
 ### 1.1 회원가입
 
 ```
-POST /api/users/register
+POST /api/auth/users/register
 ```
 
 **Request Body**
@@ -55,7 +73,7 @@ POST /api/users/register
 ### 1.2 로그인
 
 ```
-POST /api/users/login
+POST /api/auth/users/login
 ```
 
 **Request Body**
@@ -85,10 +103,10 @@ POST /api/users/login
 
 ---
 
-### 1.3 내 프로필 조회
+### 1.3 사용자 프로필 조회
 
 ```
-GET /api/users/profile
+GET /api/auth/users/profile
 Authorization: Bearer {token}
 ```
 
@@ -100,6 +118,20 @@ Authorization: Bearer {token}
   "email": "hong@example.com",
   "phone": "010-1234-5678",
   "createdAt": "2026-03-09T11:30:00Z"
+}
+```
+
+### 1.4 사용자 로그아웃
+
+```
+POST /api/auth/users/logout
+Authorization: Bearer {token}
+```
+
+**Response `200 OK`**
+```json
+{
+  "message": "logout"
 }
 ```
 
