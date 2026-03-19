@@ -232,14 +232,14 @@ Authorization: Bearer {token}
 
 ---
 
-## 3. Payment Service (`/api/payments`)
+## 3. Payment Service (`/api/payment`)
 
 결제 처리 및 내역 관리. 결제 완료 시 Flight Service에 예약 자동 생성 (서비스 간 통신).
 
 ### 3.1 결제 요청
 
 ```
-POST /api/payments
+POST /api/payment
 Authorization: Bearer {token}
 ```
 
@@ -288,7 +288,7 @@ Authorization: Bearer {token}
 ### 3.2 결제 상세 조회
 
 ```
-GET /api/payments/{id}
+GET /api/payment/{id}
 Authorization: Bearer {token}
 ```
 
@@ -309,7 +309,7 @@ Authorization: Bearer {token}
 ### 3.3 결제 내역 목록
 
 ```
-GET /api/payments
+GET /api/payment
 Authorization: Bearer {token}
 ```
 

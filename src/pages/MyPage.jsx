@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReservations } from '../api/reservations';
-import { getPayments } from '../api/payments';
+import { getPayments } from '../api/payment';
 import './MyPage.css';
 
 // Demo data
