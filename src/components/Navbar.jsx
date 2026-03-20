@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
-    const isLoggedIn = Boolean(localStorage.getItem('token'));
+    const { status, isAuthenticated, logout } = useAuth();
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
+    const handleLogout = async () => {
+        await logout();
         navigate('/login');
         setMenuOpen(false);
     };
@@ -28,14 +29,14 @@ export default function Navbar() {
                     <Link to="/flights" className="nav-link" onClick={() => setMenuOpen(false)}>
                         항공편 조회
                     </Link>
-                    {isLoggedIn && (
+                    {isAuthenticated && (
                         <Link to="/mypage" className="nav-link" onClick={() => setMenuOpen(false)}>
                             마이페이지
                         </Link>
                     )}
                     <div className="nav-divider"></div>
                     <div className="nav-auth">
-                        {isLoggedIn ? (
+                        {status === 'checking' ? null : isAuthenticated ? (
                             <button className="nav-auth-link" onClick={handleLogout}>로그아웃</button>
                         ) : (
                             <>

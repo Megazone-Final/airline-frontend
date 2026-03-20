@@ -7,6 +7,7 @@ import Payment from './pages/Payment';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import MyPage from './pages/MyPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
     return (
@@ -15,10 +16,24 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/flights" element={<FlightSearch />} />
                 <Route path="/booking/:flightId" element={<Booking />} />
-                <Route path="/payment" element={<Payment />} />
+                <Route
+                    path="/payment"
+                    element={(
+                        <ProtectedRoute>
+                            <Payment />
+                        </ProtectedRoute>
+                    )}
+                />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/mypage" element={<MyPage />} />
+                <Route
+                    path="/mypage"
+                    element={(
+                        <ProtectedRoute>
+                            <MyPage />
+                        </ProtectedRoute>
+                    )}
+                />
             </Routes>
         </Layout>
     );

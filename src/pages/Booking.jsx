@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Booking.css';
 
 export default function Booking() {
     const { flightId } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
+    const { status, isAuthenticated } = useAuth();
 
     const flight = location.state?.flight || {
         id: flightId,
@@ -57,8 +59,23 @@ export default function Booking() {
 
     const handleProceedPayment = () => {
         if (!validate()) return;
+
+        const paymentState = { flight, passengers, date };
+
+        if (status !== 'checking' && !isAuthenticated) {
+            navigate('/login', {
+                state: {
+                    from: {
+                        pathname: '/payment',
+                        state: paymentState,
+                    },
+                },
+            });
+            return;
+        }
+
         navigate('/payment', {
-            state: { flight, passengers, date },
+            state: paymentState,
         });
     };
 

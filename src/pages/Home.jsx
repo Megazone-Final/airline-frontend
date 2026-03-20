@@ -1,20 +1,81 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { AIRPORT_OPTIONS } from '../data/airports';
 import './Home.css';
 
 export default function Home() {
     const navigate = useNavigate();
+    const { status, isAuthenticated } = useAuth();
     const [departure, setDeparture] = useState('');
     const [arrival, setArrival] = useState('');
     const [date, setDate] = useState('');
+    const [errors, setErrors] = useState({});
+
+    const departureOptions = AIRPORT_OPTIONS.filter((option) => option.value !== arrival);
+    const arrivalOptions = AIRPORT_OPTIONS.filter((option) => option.value !== departure);
+
+    const validateSearch = () => {
+        const nextErrors = {};
+
+        if (!departure) {
+            nextErrors.departure = '출발지를 선택하세요';
+        }
+
+        if (!arrival) {
+            nextErrors.arrival = '도착지를 선택하세요';
+        }
+
+        if (departure && arrival && departure === arrival) {
+            nextErrors.arrival = '도착지는 출발지와 달라야 합니다';
+        }
+
+        setErrors(nextErrors);
+        return Object.keys(nextErrors).length === 0;
+    };
+
+    const handleDepartureChange = (value) => {
+        setDeparture(value);
+        setErrors((prev) => ({ ...prev, departure: '', arrival: '' }));
+        if (value && value === arrival) {
+            setArrival('');
+        }
+    };
+
+    const handleArrivalChange = (value) => {
+        setArrival(value);
+        setErrors((prev) => ({ ...prev, departure: '', arrival: '' }));
+        if (value && value === departure) {
+            setDeparture('');
+        }
+    };
 
     const handleSearch = (e) => {
         e.preventDefault();
+        if (!validateSearch()) {
+            return;
+        }
+
         const params = new URLSearchParams();
-        if (departure) params.set('departure', departure);
-        if (arrival) params.set('arrival', arrival);
+        params.set('departure', departure);
+        params.set('arrival', arrival);
         if (date) params.set('date', date);
         navigate(`/flights?${params.toString()}`);
+    };
+
+    const navigateToProtectedPage = (pathname) => {
+        if (status !== 'checking' && !isAuthenticated) {
+            navigate('/login', {
+                state: {
+                    from: {
+                        pathname,
+                    },
+                },
+            });
+            return;
+        }
+
+        navigate(pathname);
     };
 
     return (
@@ -34,24 +95,45 @@ export default function Home() {
                 <form className="home-search" onSubmit={handleSearch}>
                     <div className="hs-field">
                         <label>출발지</label>
-                        <input
-                            type="text"
-                            placeholder="도시 또는 공항코드"
+                        <select
+                            className={`form-input ${errors.departure ? 'input-error' : ''}`}
                             value={departure}
-                            onChange={(e) => setDeparture(e.target.value)}
-                        />
+                            onChange={(e) => handleDepartureChange(e.target.value)}
+                        >
+                            <option value="">출발지를 선택하세요</option>
+                            {departureOptions.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.departure && <span className="form-error">{errors.departure}</span>}
                     </div>
-                    <div className="hs-swap" onClick={() => { setDeparture(arrival); setArrival(departure); }}>
+                    <div
+                        className="hs-swap"
+                        onClick={() => {
+                            setDeparture(arrival);
+                            setArrival(departure);
+                            setErrors((prev) => ({ ...prev, departure: '', arrival: '' }));
+                        }}
+                    >
                         ⇄
                     </div>
                     <div className="hs-field">
                         <label>도착지</label>
-                        <input
-                            type="text"
-                            placeholder="도시 또는 공항코드"
+                        <select
+                            className={`form-input ${errors.arrival ? 'input-error' : ''}`}
                             value={arrival}
-                            onChange={(e) => setArrival(e.target.value)}
-                        />
+                            onChange={(e) => handleArrivalChange(e.target.value)}
+                        >
+                            <option value="">도착지를 선택하세요</option>
+                            {arrivalOptions.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.arrival && <span className="form-error">{errors.arrival}</span>}
                     </div>
                     <div className="hs-field">
                         <label>가는 날</label>
@@ -80,19 +162,7 @@ export default function Home() {
                         <p>출발지, 도착지, 날짜로 항공편을 검색하세요</p>
                     </div>
 
-                    <div className="ql-card" onClick={() => navigate('/register')}>
-                        <div className="ql-icon-wrap">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                <path d="M12 5v14" />
-                                <path d="M5 12h14" />
-                                <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z" />
-                            </svg>
-                        </div>
-                        <h3>회원가입</h3>
-                        <p>SkyWing Airlines 계정을 만들고 서비스를 시작하세요</p>
-                    </div>
-
-                    <div className="ql-card" onClick={() => navigate('/mypage')}>
+                    <div className="ql-card" onClick={() => navigateToProtectedPage('/mypage')}>
                         <div className="ql-icon-wrap">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                 <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />

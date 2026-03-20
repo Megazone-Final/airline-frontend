@@ -40,15 +40,29 @@ export default function Register() {
         setLoading(true);
         setServerError('');
         try {
-            await register({
+            const response = await register({
                 name: form.name,
                 email: form.email,
                 password: form.password,
                 phone: form.phone,
             });
+
+            if (
+                response.status !== 201 ||
+                !response.data ||
+                typeof response.data !== 'object' ||
+                !response.data.id
+            ) {
+                throw new Error('회원가입 응답이 올바르지 않습니다');
+            }
+
             navigate('/login', { state: { registered: true } });
         } catch (err) {
-            setServerError(err.response?.data?.message || '회원가입에 실패했습니다. 다시 시도해주세요.');
+            setServerError(
+                err.response?.data?.message ||
+                err.message ||
+                '회원가입에 실패했습니다. 다시 시도해주세요.'
+            );
         } finally {
             setLoading(false);
         }
