@@ -4,6 +4,13 @@ on:
     push:
         branches:
             - main # 메인 브랜치에 푸시될 때 작동
+        paths:
+            - "src/**"
+            - "package.json"
+            - "package-lock.json"
+            - "index.html"
+            - "vite.config.js"
+            - ".github/workflows/deploy.yml"
 
 permissions:
     id-token: write

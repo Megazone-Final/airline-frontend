@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { login } from '../api/auth';
+import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
 export default function Login() {
     const navigate = useNavigate();
     const location = useLocation();
     const registered = location.state?.registered;
+    const { login: completeLogin } = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,10 +31,29 @@ export default function Login() {
         setServerError('');
         try {
             const res = await login({ email, password });
-            localStorage.setItem('token', res.data.token);
-            navigate('/');
+            if (!res?.data || typeof res.data !== 'object' || !res.data.token) {
+                throw new Error('인증 서버 응답이 올바르지 않습니다');
+            }
+
+            completeLogin({
+                token: res.data.token,
+                user: res.data.user,
+            });
+
+            const redirectTarget = location.state?.from;
+            const nextPath = redirectTarget?.pathname
+                ? `${redirectTarget.pathname}${redirectTarget.search || ''}`
+                : '/';
+            navigate(nextPath, {
+                replace: true,
+                state: redirectTarget?.state,
+            });
         } catch (err) {
-            setServerError(err.response?.data?.message || '로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
+            setServerError(
+                err.response?.data?.message ||
+                err.message ||
+                '로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.'
+            );
         } finally {
             setLoading(false);
         }
