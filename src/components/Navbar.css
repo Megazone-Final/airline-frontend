@@ -5,8 +5,9 @@
     right: 0;
     height: var(--navbar-height);
     z-index: 1000;
-    background: var(--color-primary);
+    background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
     color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 24, 69, 0.18);
 }
 
 .navbar-inner {
@@ -33,6 +34,7 @@
     transform: rotate(90deg);
     animation: planeFloat 3s ease-in-out infinite;
     transform-origin: center;
+    color: var(--color-sky);
 }
 
 @keyframes planeFloat {
@@ -48,9 +50,9 @@
 }
 
 .logo-text {
-    font-size: 1.4rem;
+    font-size: 1.45rem;
     font-weight: 700;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
 }
 
 .logo-sub {
@@ -58,6 +60,7 @@
     font-weight: 400;
     letter-spacing: 0.2em;
     opacity: 0.8;
+    color: rgba(255, 255, 255, 0.68);
 }
 
 .navbar-links {
@@ -78,7 +81,7 @@
 
 .nav-link:hover {
     color: #ffffff;
-    border-bottom-color: #ffffff;
+    border-bottom-color: var(--color-accent-light);
     text-decoration: none;
 }
 
@@ -158,7 +161,8 @@
         flex-direction: column;
         align-items: flex-start;
         padding: calc(var(--navbar-height) + var(--space-6)) var(--space-6) var(--space-6);
-        background: var(--color-primary);
+        background: linear-gradient(180deg, var(--color-primary-dark), var(--color-primary));
+        box-shadow: -16px 0 32px rgba(0, 24, 69, 0.22);
         transition: right 0.3s ease;
         gap: var(--space-4);
     }

@@ -143,7 +143,10 @@ export default function Payment() {
                             <h3>카드 정보</h3>
 
                             <div className="card-preview">
-                                <div className="card-chip"></div>
+                                <div className="card-preview-top">
+                                    <div className="card-chip"></div>
+                                    <span className="card-brand">MZC</span>
+                                </div>
                                 <div className="card-number-display">
                                     {cardNumber || '•••• •••• •••• ••••'}
                                 </div>

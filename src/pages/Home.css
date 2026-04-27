@@ -1,53 +1,68 @@
 /* ---------- Hero ---------- */
 .hero {
     position: relative;
-    height: 380px;
+    height: 460px;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #001845 0%, #0b4da2 50%, #4a90d9 100%);
+    background:
+        linear-gradient(90deg, rgba(0, 24, 69, 0.86) 0%, rgba(0, 37, 108, 0.64) 36%, rgba(0, 37, 108, 0.08) 76%),
+        url('../assets/mzc-hero.jpg') center right / cover no-repeat;
     overflow: hidden;
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 24, 69, 0.26)),
+        repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 18px);
 }
 
 .hero-content {
     position: relative;
     z-index: 1;
+    max-width: var(--max-width);
 }
 
 .hero-title {
-    font-size: var(--font-size-4xl);
+    max-width: 560px;
+    font-size: clamp(2.4rem, 5vw, 4.8rem);
     font-weight: 700;
     color: #ffffff;
-    line-height: 1.35;
-    margin-bottom: var(--space-3);
+    line-height: 1.15;
+    margin-bottom: var(--space-4);
+    text-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
 }
 
 .hero-sub {
+    display: inline-flex;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
     font-size: var(--font-size-base);
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.88);
 }
 
 /* ---------- Search ---------- */
 .search-section {
-    margin-top: -36px;
+    margin-top: -54px;
     position: relative;
     z-index: 10;
-    margin-bottom: var(--space-12);
+    margin-bottom: var(--space-10);
 }
 
 .home-search {
     display: flex;
     align-items: flex-end;
     gap: var(--space-3);
-    background: #ffffff;
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.96);
+    padding: var(--space-5);
+    border: 1px solid rgba(0, 37, 108, 0.08);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(12px);
 }
 
 .hs-field {
@@ -67,8 +82,9 @@
 .hs-field input,
 .hs-field select {
     width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--color-border);
+    min-height: 48px;
+    padding: 11px 13px;
+    border: 1px solid rgba(0, 37, 108, 0.12);
     border-radius: var(--radius-md);
     font-size: var(--font-size-base);
     color: var(--color-text);
@@ -86,12 +102,28 @@
 }
 
 .hs-swap {
-    padding-bottom: 10px;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 3px;
+    border: 1px solid rgba(11, 77, 162, 0.15);
+    border-radius: var(--radius-full);
+    background: #ffffff;
     font-size: 1.1rem;
     color: var(--color-primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     user-select: none;
     font-weight: 600;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.hs-swap:hover {
+    border-color: var(--color-primary-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
 }
 
 .hs-btn {
@@ -100,11 +132,12 @@
 
 @media (max-width: 768px) {
     .hero {
-        height: 280px;
+        height: 360px;
+        background-position: center;
     }
 
     .hero-title {
-        font-size: var(--font-size-2xl);
+        font-size: clamp(2rem, 9vw, 3rem);
     }
 
     .home-search {
@@ -124,7 +157,7 @@
 
 /* ---------- Quick Links ---------- */
 .quick-links {
-    padding-bottom: var(--space-12);
+    padding-bottom: var(--space-10);
 }
 
 .ql-grid {
@@ -134,7 +167,9 @@
 }
 
 .ql-card {
-    border: 1px solid var(--color-border-light);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 37, 108, 0.08);
     border-radius: var(--radius-lg);
     padding: var(--space-8) var(--space-6);
     min-height: 200px;
@@ -144,24 +179,40 @@
     justify-content: center;
     text-align: center;
     cursor: pointer;
-    transition: all var(--transition-base);
+    background: #ffffff;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .ql-card:hover {
     border-color: var(--color-primary-light);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+}
+
+.ql-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary-light), var(--color-teal));
+}
+
+.ql-card:nth-child(2)::before {
+    background: linear-gradient(90deg, var(--color-accent-light), var(--color-coral));
 }
 
 .ql-icon-wrap {
-    width: 56px;
-    height: 56px;
+    width: 66px;
+    height: 66px;
     border-radius: 50%;
-    background: var(--color-primary-50);
+    background: linear-gradient(135deg, var(--color-primary-50), #ffffff);
     color: var(--color-primary);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto var(--space-5);
+    box-shadow: inset 0 0 0 1px rgba(0, 37, 108, 0.08);
 }
 
 .ql-card h3 {
@@ -202,15 +253,16 @@
 
 /* ---------- Popular Routes ---------- */
 .popular-section {
-    background: var(--color-bg-secondary);
-    padding: var(--space-12) 0;
+    background:
+        linear-gradient(180deg, #f7f9fc 0%, #eef3f8 100%);
+    padding: var(--space-12) 0 var(--space-16);
 }
 
 .section-title {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: var(--color-primary);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
 }
 
 .routes-grid {
@@ -220,22 +272,70 @@
 }
 
 .route-card {
+    position: relative;
+    overflow: hidden;
     background: #ffffff;
-    border: 1px solid var(--color-border-light);
+    border: 1px solid rgba(0, 37, 108, 0.08);
     border-radius: var(--radius-lg);
     padding: var(--space-5);
     cursor: pointer;
-    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .route-card:hover {
-    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
     border-color: var(--color-primary-light);
 }
 
+.route-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(74, 144, 217, 0.12), transparent 52%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 37, 108, 0.04));
+    pointer-events: none;
+}
+
+.route-card:nth-child(2)::before {
+    background:
+        linear-gradient(135deg, rgba(197, 139, 23, 0.14), transparent 52%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 37, 108, 0.04));
+}
+
+.route-card:nth-child(3)::before {
+    background:
+        linear-gradient(135deg, rgba(0, 124, 137, 0.14), transparent 52%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 37, 108, 0.04));
+}
+
+.route-card:nth-child(4)::before {
+    background:
+        linear-gradient(135deg, rgba(217, 95, 67, 0.14), transparent 52%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 37, 108, 0.04));
+}
+
+.route-tag {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    margin-bottom: var(--space-4);
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    background: var(--color-primary-50);
+    color: var(--color-primary);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+}
+
 .route-cities {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: var(--space-2);
     margin-bottom: var(--space-4);
 }
@@ -252,9 +352,12 @@
 }
 
 .route-price {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
 }
 
 .price-label {

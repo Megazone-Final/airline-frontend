@@ -85,7 +85,7 @@ export default function Home() {
                 <div className="hero-content container">
                     <h1 className="hero-title">
                         새로운 하늘길,<br />
-                        MZC Airline과 함께 떠나세요
+                        MZC와 함께 떠나세요
                     </h1>
                     <p className="hero-sub">국내·국제 항공권 검색 및 예약</p>
                 </div>
@@ -187,6 +187,7 @@ export default function Home() {
                             { from: '김포 GMP', to: '제주 CJU', price: '200,000' },
                         ].map((route, i) => (
                             <div key={i} className="route-card" onClick={() => navigate('/flights')}>
+                                <span className="route-tag">MZC 추천</span>
                                 <div className="route-cities">
                                     <span className="route-from">{route.from}</span>
                                     <span className="route-arrow">→</span>

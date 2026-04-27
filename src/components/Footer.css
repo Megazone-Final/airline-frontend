@@ -1,5 +1,7 @@
 .footer {
-    background: var(--color-primary);
+    background:
+        linear-gradient(135deg, rgba(0, 124, 137, 0.32), transparent 38%),
+        linear-gradient(180deg, var(--color-primary), var(--color-primary-dark));
     color: #ffffff;
     margin-top: auto;
 }
@@ -25,7 +27,7 @@
 .footer-logo-text {
     font-size: 1.2rem;
     font-weight: 700;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
 }
 
 .footer-logo-sub {
@@ -36,7 +38,7 @@
 }
 
 .footer-desc {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.72);
     font-size: var(--font-size-sm);
     line-height: 1.7;
 }
@@ -63,7 +65,7 @@
 
 .footer-col a {
     font-size: var(--font-size-sm);
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.78);
     text-decoration: none;
 }
 

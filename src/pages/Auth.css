@@ -5,20 +5,37 @@
     justify-content: center;
     min-height: calc(100vh - var(--navbar-height));
     padding: var(--space-8) 0;
-    background: var(--color-bg-secondary);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(246, 248, 251, 0.92)),
+        var(--color-bg-secondary);
 }
 
 .auth-wrapper {
     width: 100%;
-    max-width: 440px;
+    max-width: 920px;
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 440px;
+    gap: var(--space-5);
+    align-items: stretch;
+}
+
+.auth-wrapper::before {
+    content: '';
+    display: block;
+    min-height: 520px;
+    border-radius: var(--radius-xl);
+    background:
+        linear-gradient(160deg, rgba(0, 24, 69, 0.8), rgba(0, 124, 137, 0.22)),
+        url('../assets/mzc-hero.jpg') center / cover no-repeat;
+    box-shadow: var(--shadow-lg);
 }
 
 .auth-card {
     border-radius: var(--radius-lg);
     padding: var(--space-10);
     background: #ffffff;
-    border: 1px solid var(--color-border-light);
-    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(0, 37, 108, 0.08);
+    box-shadow: var(--shadow-lg);
 }
 
 .auth-header {
@@ -82,7 +99,27 @@
 }
 
 @media (max-width: 480px) {
+    .auth-wrapper {
+        display: block;
+        max-width: 440px;
+    }
+
+    .auth-wrapper::before {
+        display: none;
+    }
+
     .auth-card {
         padding: var(--space-6);
+    }
+}
+
+@media (max-width: 860px) {
+    .auth-wrapper {
+        display: block;
+        max-width: 440px;
+    }
+
+    .auth-wrapper::before {
+        display: none;
     }
 }
