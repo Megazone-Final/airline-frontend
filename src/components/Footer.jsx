@@ -7,12 +7,12 @@ export default function Footer() {
             <div className="container footer-inner">
                 <div className="footer-brand">
                     <div className="footer-logo">
-                        <span className="footer-logo-text">SKYWING</span>
+                        <span className="footer-logo-text">MZC</span>
                         <span className="footer-logo-sub">AIRLINES</span>
                     </div>
                     <p className="footer-desc">
                         안전하고 편안한 하늘길,<br />
-                        SkyWing Airlines가 함께합니다.
+                        MZC가 함께합니다.
                     </p>
                 </div>
 
@@ -31,7 +31,7 @@ export default function Footer() {
             </div>
             <div className="footer-bottom">
                 <div className="container">
-                    <p>© 2026 SkyWing Airlines. All rights reserved.</p>
+                    <p>© 2026 MZC. All rights reserved.</p>
                 </div>
             </div>
         </footer>

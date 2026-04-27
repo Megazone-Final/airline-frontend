@@ -11,8 +11,8 @@ export default function Booking() {
 
     const flight = location.state?.flight || {
         id: flightId,
-        airline: 'SkyWing Air',
-        flightNo: 'SW101',
+        airline: 'MZC',
+        flightNo: 'MZC101',
         departure: 'ICN',
         arrival: 'NRT',
         departureTime: '08:30',
@@ -92,7 +92,7 @@ export default function Booking() {
                     <div className="summary-badge">선택한 항공편</div>
                     <div className="summary-content">
                         <div className="summary-airline">
-                            <span className="airline-icon">SW</span>
+                            <span className="airline-icon">MZC</span>
                             <div>
                                 <strong>{flight.airline}</strong>
                                 <span>{flight.flightNo}</span>

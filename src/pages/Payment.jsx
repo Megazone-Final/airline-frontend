@@ -78,7 +78,7 @@ export default function Payment() {
                         <div className="success-details card">
                             <div className="success-row">
                                 <span>예약 번호</span>
-                                <strong>SW-{Date.now().toString(36).toUpperCase()}</strong>
+                                <strong>MZC-{Date.now().toString(36).toUpperCase()}</strong>
                             </div>
                             <div className="success-row">
                                 <span>항공편</span>

@@ -75,7 +75,7 @@ export default function Register() {
                     <div className="auth-card">
                         <div className="auth-header">
                             <h1>회원가입</h1>
-                            <p>SkyWing Airlines의 회원이 되어보세요</p>
+                            <p>MZC의 회원이 되어보세요</p>
                         </div>
 
                         {serverError && <div className="auth-error-banner">{serverError}</div>}

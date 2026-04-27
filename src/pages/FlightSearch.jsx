@@ -6,30 +6,30 @@ import './FlightSearch.css';
 
 // Demo data for when backend is not available
 const DEMO_FLIGHTS = [
-    { id: 1, airline: 'SkyWing Air', flightNo: 'SW101', departure: 'ICN', arrival: 'NRT', departureTime: '08:30', arrivalTime: '11:00', duration: '2h 30m', price: 189000, seats: 42 },
-    { id: 2, airline: 'SkyWing Air', flightNo: 'SW201', departure: 'ICN', arrival: 'NRT', departureTime: '13:15', arrivalTime: '15:45', duration: '2h 30m', price: 215000, seats: 18 },
-    { id: 3, airline: 'SkyWing Air', flightNo: 'SW305', departure: 'ICN', arrival: 'NRT', departureTime: '18:40', arrivalTime: '21:10', duration: '2h 30m', price: 175000, seats: 67 },
-    { id: 4, airline: 'SkyWing Air', flightNo: 'SW321', departure: 'ICN', arrival: 'NRT', departureTime: '21:25', arrivalTime: '23:55', duration: '2h 30m', price: 198000, seats: 29 },
-    { id: 5, airline: 'SkyWing Air', flightNo: 'SW102', departure: 'ICN', arrival: 'KIX', departureTime: '07:00', arrivalTime: '09:15', duration: '2h 15m', price: 165000, seats: 35 },
-    { id: 6, airline: 'SkyWing Air', flightNo: 'SW118', departure: 'ICN', arrival: 'KIX', departureTime: '11:50', arrivalTime: '14:05', duration: '2h 15m', price: 172000, seats: 44 },
-    { id: 7, airline: 'SkyWing Air', flightNo: 'SW126', departure: 'ICN', arrival: 'KIX', departureTime: '19:20', arrivalTime: '21:35', duration: '2h 15m', price: 158000, seats: 21 },
-    { id: 8, airline: 'SkyWing Air', flightNo: 'SW410', departure: 'ICN', arrival: 'BKK', departureTime: '10:20', arrivalTime: '14:50', duration: '5h 30m', price: 285000, seats: 23 },
-    { id: 9, airline: 'SkyWing Air', flightNo: 'SW422', departure: 'ICN', arrival: 'BKK', departureTime: '16:05', arrivalTime: '20:40', duration: '5h 35m', price: 312000, seats: 16 },
-    { id: 10, airline: 'SkyWing Air', flightNo: 'SW434', departure: 'ICN', arrival: 'BKK', departureTime: '20:10', arrivalTime: '00:45', duration: '5h 35m', price: 274000, seats: 31 },
-    { id: 11, airline: 'SkyWing Air', flightNo: 'SW510', departure: 'GMP', arrival: 'CJU', departureTime: '09:00', arrivalTime: '10:10', duration: '1h 10m', price: 68000, seats: 89 },
-    { id: 12, airline: 'SkyWing Air', flightNo: 'SW518', departure: 'GMP', arrival: 'CJU', departureTime: '12:35', arrivalTime: '13:45', duration: '1h 10m', price: 74000, seats: 53 },
-    { id: 13, airline: 'SkyWing Air', flightNo: 'SW526', departure: 'GMP', arrival: 'CJU', departureTime: '18:10', arrivalTime: '19:20', duration: '1h 10m', price: 79000, seats: 36 },
-    { id: 14, airline: 'SkyWing Air', flightNo: 'SW611', departure: 'CJU', arrival: 'GMP', departureTime: '08:15', arrivalTime: '09:25', duration: '1h 10m', price: 65000, seats: 71 },
-    { id: 15, airline: 'SkyWing Air', flightNo: 'SW619', departure: 'CJU', arrival: 'GMP', departureTime: '14:20', arrivalTime: '15:30', duration: '1h 10m', price: 72000, seats: 48 },
-    { id: 16, airline: 'SkyWing Air', flightNo: 'SW627', departure: 'CJU', arrival: 'GMP', departureTime: '20:35', arrivalTime: '21:45', duration: '1h 10m', price: 76000, seats: 27 },
-    { id: 17, airline: 'SkyWing Air', flightNo: 'SW701', departure: 'NRT', arrival: 'ICN', departureTime: '09:40', arrivalTime: '12:20', duration: '2h 40m', price: 193000, seats: 38 },
-    { id: 18, airline: 'SkyWing Air', flightNo: 'SW709', departure: 'NRT', arrival: 'ICN', departureTime: '15:10', arrivalTime: '17:50', duration: '2h 40m', price: 207000, seats: 24 },
-    { id: 19, airline: 'SkyWing Air', flightNo: 'SW731', departure: 'KIX', arrival: 'ICN', departureTime: '10:00', arrivalTime: '12:10', duration: '2h 10m', price: 161000, seats: 33 },
-    { id: 20, airline: 'SkyWing Air', flightNo: 'SW739', departure: 'KIX', arrival: 'ICN', departureTime: '17:30', arrivalTime: '19:40', duration: '2h 10m', price: 169000, seats: 25 },
-    { id: 21, airline: 'SkyWing Air', flightNo: 'SW811', departure: 'BKK', arrival: 'ICN', departureTime: '01:20', arrivalTime: '08:45', duration: '5h 25m', price: 301000, seats: 19 },
-    { id: 22, airline: 'SkyWing Air', flightNo: 'SW823', departure: 'BKK', arrival: 'ICN', departureTime: '11:05', arrivalTime: '18:30', duration: '5h 25m', price: 289000, seats: 28 },
-    { id: 23, airline: 'SkyWing Air', flightNo: 'SW902', departure: 'ICN', arrival: 'CJU', departureTime: '07:45', arrivalTime: '08:55', duration: '1h 10m', price: 71000, seats: 61 },
-    { id: 24, airline: 'SkyWing Air', flightNo: 'SW918', departure: 'ICN', arrival: 'CJU', departureTime: '17:15', arrivalTime: '18:25', duration: '1h 10m', price: 84000, seats: 34 },
+    { id: 1, airline: 'MZC', flightNo: 'MZC101', departure: 'ICN', arrival: 'NRT', departureTime: '08:30', arrivalTime: '11:00', duration: '2h 30m', price: 189000, seats: 42 },
+    { id: 2, airline: 'MZC', flightNo: 'MZC201', departure: 'ICN', arrival: 'NRT', departureTime: '13:15', arrivalTime: '15:45', duration: '2h 30m', price: 215000, seats: 18 },
+    { id: 3, airline: 'MZC', flightNo: 'MZC305', departure: 'ICN', arrival: 'NRT', departureTime: '18:40', arrivalTime: '21:10', duration: '2h 30m', price: 175000, seats: 67 },
+    { id: 4, airline: 'MZC', flightNo: 'MZC321', departure: 'ICN', arrival: 'NRT', departureTime: '21:25', arrivalTime: '23:55', duration: '2h 30m', price: 198000, seats: 29 },
+    { id: 5, airline: 'MZC', flightNo: 'MZC102', departure: 'ICN', arrival: 'KIX', departureTime: '07:00', arrivalTime: '09:15', duration: '2h 15m', price: 165000, seats: 35 },
+    { id: 6, airline: 'MZC', flightNo: 'MZC118', departure: 'ICN', arrival: 'KIX', departureTime: '11:50', arrivalTime: '14:05', duration: '2h 15m', price: 172000, seats: 44 },
+    { id: 7, airline: 'MZC', flightNo: 'MZC126', departure: 'ICN', arrival: 'KIX', departureTime: '19:20', arrivalTime: '21:35', duration: '2h 15m', price: 158000, seats: 21 },
+    { id: 8, airline: 'MZC', flightNo: 'MZC410', departure: 'ICN', arrival: 'BKK', departureTime: '10:20', arrivalTime: '14:50', duration: '5h 30m', price: 285000, seats: 23 },
+    { id: 9, airline: 'MZC', flightNo: 'MZC422', departure: 'ICN', arrival: 'BKK', departureTime: '16:05', arrivalTime: '20:40', duration: '5h 35m', price: 312000, seats: 16 },
+    { id: 10, airline: 'MZC', flightNo: 'MZC434', departure: 'ICN', arrival: 'BKK', departureTime: '20:10', arrivalTime: '00:45', duration: '5h 35m', price: 274000, seats: 31 },
+    { id: 11, airline: 'MZC', flightNo: 'MZC510', departure: 'GMP', arrival: 'CJU', departureTime: '09:00', arrivalTime: '10:10', duration: '1h 10m', price: 68000, seats: 89 },
+    { id: 12, airline: 'MZC', flightNo: 'MZC518', departure: 'GMP', arrival: 'CJU', departureTime: '12:35', arrivalTime: '13:45', duration: '1h 10m', price: 74000, seats: 53 },
+    { id: 13, airline: 'MZC', flightNo: 'MZC526', departure: 'GMP', arrival: 'CJU', departureTime: '18:10', arrivalTime: '19:20', duration: '1h 10m', price: 79000, seats: 36 },
+    { id: 14, airline: 'MZC', flightNo: 'MZC611', departure: 'CJU', arrival: 'GMP', departureTime: '08:15', arrivalTime: '09:25', duration: '1h 10m', price: 65000, seats: 71 },
+    { id: 15, airline: 'MZC', flightNo: 'MZC619', departure: 'CJU', arrival: 'GMP', departureTime: '14:20', arrivalTime: '15:30', duration: '1h 10m', price: 72000, seats: 48 },
+    { id: 16, airline: 'MZC', flightNo: 'MZC627', departure: 'CJU', arrival: 'GMP', departureTime: '20:35', arrivalTime: '21:45', duration: '1h 10m', price: 76000, seats: 27 },
+    { id: 17, airline: 'MZC', flightNo: 'MZC701', departure: 'NRT', arrival: 'ICN', departureTime: '09:40', arrivalTime: '12:20', duration: '2h 40m', price: 193000, seats: 38 },
+    { id: 18, airline: 'MZC', flightNo: 'MZC709', departure: 'NRT', arrival: 'ICN', departureTime: '15:10', arrivalTime: '17:50', duration: '2h 40m', price: 207000, seats: 24 },
+    { id: 19, airline: 'MZC', flightNo: 'MZC731', departure: 'KIX', arrival: 'ICN', departureTime: '10:00', arrivalTime: '12:10', duration: '2h 10m', price: 161000, seats: 33 },
+    { id: 20, airline: 'MZC', flightNo: 'MZC739', departure: 'KIX', arrival: 'ICN', departureTime: '17:30', arrivalTime: '19:40', duration: '2h 10m', price: 169000, seats: 25 },
+    { id: 21, airline: 'MZC', flightNo: 'MZC811', departure: 'BKK', arrival: 'ICN', departureTime: '01:20', arrivalTime: '08:45', duration: '5h 25m', price: 301000, seats: 19 },
+    { id: 22, airline: 'MZC', flightNo: 'MZC823', departure: 'BKK', arrival: 'ICN', departureTime: '11:05', arrivalTime: '18:30', duration: '5h 25m', price: 289000, seats: 28 },
+    { id: 23, airline: 'MZC', flightNo: 'MZC902', departure: 'ICN', arrival: 'CJU', departureTime: '07:45', arrivalTime: '08:55', duration: '1h 10m', price: 71000, seats: 61 },
+    { id: 24, airline: 'MZC', flightNo: 'MZC918', departure: 'ICN', arrival: 'CJU', departureTime: '17:15', arrivalTime: '18:25', duration: '1h 10m', price: 84000, seats: 34 },
 ];
 
 export default function FlightSearch() {
@@ -230,7 +230,7 @@ export default function FlightSearch() {
                                 >
                                     <div className="flight-info">
                                         <div className="flight-airline">
-                                            <span className="airline-badge">SW</span>
+                                            <span className="airline-badge">MZC</span>
                                             <div>
                                                 <strong>{flight.airline}</strong>
                                                 <span className="flight-no">{flight.flightNo}</span>

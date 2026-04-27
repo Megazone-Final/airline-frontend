@@ -1,4 +1,4 @@
-﻿# SkyWing Airlines — API Specification
+﻿# MZC — API Specification
 
 > 백엔드 MSA 3개 서비스에 대한 REST API 명세
 
@@ -160,8 +160,8 @@ GET /api/flight?departure={code}&arrival={code}&date={YYYY-MM-DD}&passengers={n}
 [
   {
     "id": 1,
-    "airline": "SkyWing Air",
-    "flightNo": "SW101",
+    "airline": "MZC",
+    "flightNo": "MZC101",
     "departure": "ICN",
     "arrival": "NRT",
     "departureTime": "08:30",
@@ -185,8 +185,8 @@ GET /api/flight/{id}
 ```json
 {
   "id": 1,
-  "airline": "SkyWing Air",
-  "flightNo": "SW101",
+  "airline": "MZC",
+  "flightNo": "MZC101",
   "departure": "ICN",
   "departureAirport": "인천국제공항",
   "arrival": "NRT",
@@ -213,8 +213,8 @@ Authorization: Bearer {token}
 ```json
 [
   {
-    "id": "SW-R001",
-    "flightNo": "SW101",
+    "id": "MZC-R001",
+    "flightNo": "MZC101",
     "departure": "ICN",
     "arrival": "NRT",
     "date": "2026-04-15",
@@ -239,8 +239,8 @@ Authorization: Bearer {token}
 **Response `200 OK`**
 ```json
 {
-  "id": "SW-R001",
-  "flightNo": "SW101",
+  "id": "MZC-R001",
+  "flightNo": "MZC101",
   "departure": "ICN",
   "arrival": "NRT",
   "date": "2026-04-15",
@@ -298,7 +298,7 @@ Authorization: Bearer {token}
 ```json
 {
   "id": "PAY-001",
-  "reservationId": "SW-R001",
+  "reservationId": "MZC-R001",
   "amount": 234000,
   "status": "completed",
   "method": "CARD",
@@ -328,7 +328,7 @@ Authorization: Bearer {token}
 ```json
 {
   "id": "PAY-001",
-  "reservationId": "SW-R001",
+  "reservationId": "MZC-R001",
   "amount": 234000,
   "status": "completed",
   "method": "CARD",
@@ -350,7 +350,7 @@ Authorization: Bearer {token}
 [
   {
     "id": "PAY-001",
-    "reservationId": "SW-R001",
+    "reservationId": "MZC-R001",
     "amount": 234000,
     "method": "VISA ****1234",
     "status": "completed",

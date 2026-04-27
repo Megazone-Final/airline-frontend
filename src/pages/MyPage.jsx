@@ -6,13 +6,13 @@ import './MyPage.css';
 
 // Demo data
 const DEMO_RESERVATIONS = [
-    { id: 'SW-R001', flightNo: 'SW101', departure: 'ICN', arrival: 'NRT', date: '2026-04-15', departureTime: '08:30', status: 'confirmed', passengerCount: 1, totalPrice: 234000 },
-    { id: 'SW-R002', flightNo: 'SW410', departure: 'ICN', arrival: 'BKK', date: '2026-05-20', departureTime: '10:20', status: 'confirmed', passengerCount: 2, totalPrice: 660000 },
+    { id: 'MZC-R001', flightNo: 'MZC101', departure: 'ICN', arrival: 'NRT', date: '2026-04-15', departureTime: '08:30', status: 'confirmed', passengerCount: 1, totalPrice: 234000 },
+    { id: 'MZC-R002', flightNo: 'MZC410', departure: 'ICN', arrival: 'BKK', date: '2026-05-20', departureTime: '10:20', status: 'confirmed', passengerCount: 2, totalPrice: 660000 },
 ];
 
 const DEMO_PAYMENTS = [
-    { id: 'PAY-001', reservationId: 'SW-R001', amount: 234000, method: 'VISA ****1234', createdAt: '2026-03-09T10:30:00', status: 'completed' },
-    { id: 'PAY-002', reservationId: 'SW-R002', amount: 660000, method: 'MASTER ****5678', createdAt: '2026-03-09T11:00:00', status: 'completed' },
+    { id: 'PAY-001', reservationId: 'MZC-R001', amount: 234000, method: 'VISA ****1234', createdAt: '2026-03-09T10:30:00', status: 'completed' },
+    { id: 'PAY-002', reservationId: 'MZC-R002', amount: 660000, method: 'MASTER ****5678', createdAt: '2026-03-09T11:00:00', status: 'completed' },
 ];
 
 export default function MyPage() {

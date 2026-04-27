@@ -34,7 +34,7 @@
 }
 
 .airline-icon {
-    width: 40px;
+    width: 44px;
     height: 40px;
     border-radius: var(--radius-md);
     background: var(--color-primary);
@@ -42,7 +42,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
 }
 
 .summary-airline strong {

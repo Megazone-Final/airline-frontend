@@ -66,7 +66,7 @@ export default function Login() {
                     <div className="auth-card">
                         <div className="auth-header">
                             <h1>로그인</h1>
-                            <p>SkyWing Airlines에 오신 것을 환영합니다</p>
+                            <p>MZC에 오신 것을 환영합니다</p>
                         </div>
 
                         {registered && (
