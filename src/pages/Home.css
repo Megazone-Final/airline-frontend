@@ -25,13 +25,17 @@
 }
 
 .hero-title {
-    max-width: 560px;
-    font-size: clamp(2.4rem, 5vw, 4.8rem);
+    max-width: 760px;
+    font-size: clamp(2.4rem, 4.3vw, 4.1rem);
     font-weight: 700;
     color: #ffffff;
     line-height: 1.15;
     margin-bottom: var(--space-4);
     text-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
+}
+
+.hero-title-nowrap {
+    white-space: nowrap;
 }
 
 .hero-sub {
@@ -138,6 +142,10 @@
 
     .hero-title {
         font-size: clamp(2rem, 9vw, 3rem);
+    }
+
+    .hero-title-nowrap {
+        white-space: normal;
     }
 
     .home-search {

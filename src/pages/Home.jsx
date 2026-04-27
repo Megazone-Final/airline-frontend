@@ -85,7 +85,7 @@ export default function Home() {
                 <div className="hero-content container">
                     <h1 className="hero-title">
                         새로운 하늘길,<br />
-                        MZC와 함께 떠나세요
+                        <span className="hero-title-nowrap">MZC와 함께 떠나세요</span>
                     </h1>
                     <p className="hero-sub">국내·국제 항공권 검색 및 예약</p>
                 </div>
