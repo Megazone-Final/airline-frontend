@@ -23,6 +23,8 @@ export default function Payment() {
     const [cardName, setCardName] = useState('');
     const [processing, setProcessing] = useState(false);
     const [completed, setCompleted] = useState(false);
+    const [completedPayment, setCompletedPayment] = useState(null);
+    const [paymentError, setPaymentError] = useState('');
     const [errors, setErrors] = useState({});
 
     const formatCard = (val) => {
@@ -49,21 +51,21 @@ export default function Payment() {
     const handlePayment = async () => {
         if (!validate()) return;
         setProcessing(true);
+        setPaymentError('');
         try {
-            await createPayment({
+            const res = await createPayment({
                 flightId: flight?.id,
                 passengers,
                 date,
                 totalAmount: totalPrice,
             });
-        } catch {
-            // Demo: simulate success even without backend
-        }
-        // Simulate processing delay
-        setTimeout(() => {
-            setProcessing(false);
+            setCompletedPayment(res.data);
             setCompleted(true);
-        }, 2000);
+        } catch (err) {
+            setPaymentError(err.response?.data?.message || '결제 처리에 실패했습니다. 예약은 생성되지 않았습니다.');
+        } finally {
+            setProcessing(false);
+        }
     };
 
     if (completed) {
@@ -78,7 +80,7 @@ export default function Payment() {
                         <div className="success-details card">
                             <div className="success-row">
                                 <span>예약 번호</span>
-                                <strong>MZC-{Date.now().toString(36).toUpperCase()}</strong>
+                                <strong>{completedPayment?.reservationId || '-'}</strong>
                             </div>
                             <div className="success-row">
                                 <span>항공편</span>
@@ -273,6 +275,8 @@ export default function Payment() {
                                     `₩${totalPrice.toLocaleString()} 결제하기`
                                 )}
                             </button>
+
+                            {paymentError && <p className="payment-error">{paymentError}</p>}
 
                             <p className="payment-notice">
                                 결제 버튼을 클릭하면 이용약관에 동의한 것으로 간주됩니다.

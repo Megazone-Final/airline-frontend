@@ -1,25 +1,14 @@
 import { useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Booking.css';
 
 export default function Booking() {
-    const { flightId } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
     const { status, isAuthenticated } = useAuth();
 
-    const flight = location.state?.flight || {
-        id: flightId,
-        airline: 'MZC',
-        flightNo: 'MZC101',
-        departure: 'ICN',
-        arrival: 'NRT',
-        departureTime: '08:30',
-        arrivalTime: '11:00',
-        duration: '2h 30m',
-        price: 189000,
-    };
+    const flight = location.state?.flight || null;
 
     const passengerCount = location.state?.passengers || 1;
     const date = location.state?.date || new Date().toISOString().split('T')[0];
@@ -36,6 +25,24 @@ export default function Booking() {
     );
 
     const [errors, setErrors] = useState({});
+
+    if (!flight) {
+        return (
+            <div className="page booking">
+                <div className="container">
+                    <div className="page-header">
+                        <h1>항공편 정보가 없습니다</h1>
+                        <p>검색 결과에서 항공편을 다시 선택해주세요.</p>
+                    </div>
+                    <div className="booking-empty animate-fade-in">
+                        <button className="btn btn-primary btn-lg" onClick={() => navigate('/flights')}>
+                            항공편 검색하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const updatePassenger = (idx, field, value) => {
         setPassengers((prev) => {

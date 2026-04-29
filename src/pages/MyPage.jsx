@@ -1,13 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getReservations } from '../api/reservations';
-import { cancelReservationPayment, getPayments } from '../api/payment';
-import { useAuth } from '../context/AuthContext';
+import { cancelReservationPayment, getReservationHistory } from '../api/payment';
 import './MyPage.css';
 
 export default function MyPage() {
     const navigate = useNavigate();
-    const { user } = useAuth();
     const [tab, setTab] = useState('reservations');
     const [reservations, setReservations] = useState([]);
     const [payments, setPayments] = useState([]);
@@ -28,25 +25,15 @@ export default function MyPage() {
 
     useEffect(() => {
         loadData();
-    }, [user?.id]);
+    }, []);
 
     const loadData = async () => {
-        if (!user?.id) {
-            setReservations([]);
-            setPayments([]);
-            setLoading(false);
-            return;
-        }
-
         setLoading(true);
         setLoadError('');
         try {
-            const [resRes, payRes] = await Promise.all([getReservations(user.id), getPayments()]);
-            const nextReservations = Array.isArray(resRes.data) ? resRes.data : [];
-            const nextReservationIds = new Set(nextReservations.map((reservation) => reservation.id));
-            const nextPayments = Array.isArray(payRes.data)
-                ? payRes.data.filter((payment) => payment.reservationId && nextReservationIds.has(payment.reservationId))
-                : [];
+            const res = await getReservationHistory();
+            const nextReservations = Array.isArray(res.data?.reservations) ? res.data.reservations : [];
+            const nextPayments = Array.isArray(res.data?.payments) ? res.data.payments : [];
 
             setReservations(nextReservations);
             setPayments(nextPayments);

@@ -186,6 +186,14 @@
     line-height: 1.5;
 }
 
+.payment-error {
+    margin: 0 0 var(--space-3);
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    line-height: 1.5;
+}
+
 /* ---------- Success ---------- */
 .payment-success {
     text-align: center;
