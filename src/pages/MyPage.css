@@ -30,6 +30,30 @@
     color: var(--color-text-secondary);
 }
 
+/* ---------- Alerts ---------- */
+.mypage-alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid rgba(198, 40, 40, 0.18);
+    border-radius: var(--radius-lg);
+    background: #fef2f2;
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+}
+
+.mypage-alert button {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    color: var(--color-error);
+    font-weight: 700;
+    cursor: pointer;
+}
+
 /* ---------- Loading ---------- */
 .mypage-loading {
     text-align: center;
@@ -164,7 +188,13 @@
     flex-wrap: wrap;
 }
 
-.res-footer,
+.res-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
 .ph-footer {
     text-align: right;
 }
@@ -174,6 +204,28 @@
     font-size: var(--font-size-lg);
     font-weight: 700;
     color: var(--color-primary);
+}
+
+.res-cancel-btn {
+    border: 1px solid rgba(198, 40, 40, 0.24);
+    border-radius: var(--radius-md);
+    background: #fff7f7;
+    color: var(--color-error);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    padding: 8px 14px;
+    transition: background var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
+}
+
+.res-cancel-btn:hover:not(:disabled) {
+    background: #fef2f2;
+    border-color: rgba(198, 40, 40, 0.36);
+}
+
+.res-cancel-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 /* ---------- Payment History ---------- */
@@ -197,5 +249,15 @@
 @media (max-width: 768px) {
     .res-details {
         gap: var(--space-3);
+    }
+
+    .mypage-alert,
+    .res-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .res-cancel-btn {
+        width: 100%;
     }
 }

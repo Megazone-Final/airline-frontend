@@ -1,53 +1,93 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReservations } from '../api/reservations';
-import { getPayments } from '../api/payment';
+import { cancelReservationPayment, getPayments } from '../api/payment';
+import { useAuth } from '../context/AuthContext';
 import './MyPage.css';
-
-// Demo data
-const DEMO_RESERVATIONS = [
-    { id: 'MZC-R001', flightNo: 'MZC101', departure: 'ICN', arrival: 'NRT', date: '2026-04-15', departureTime: '08:30', status: 'confirmed', passengerCount: 1, totalPrice: 234000 },
-    { id: 'MZC-R002', flightNo: 'MZC410', departure: 'ICN', arrival: 'BKK', date: '2026-05-20', departureTime: '10:20', status: 'confirmed', passengerCount: 2, totalPrice: 660000 },
-];
-
-const DEMO_PAYMENTS = [
-    { id: 'PAY-001', reservationId: 'MZC-R001', amount: 234000, method: 'VISA ****1234', createdAt: '2026-03-09T10:30:00', status: 'completed' },
-    { id: 'PAY-002', reservationId: 'MZC-R002', amount: 660000, method: 'MASTER ****5678', createdAt: '2026-03-09T11:00:00', status: 'completed' },
-];
 
 export default function MyPage() {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [tab, setTab] = useState('reservations');
     const [reservations, setReservations] = useState([]);
     const [payments, setPayments] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState('');
+    const [actionError, setActionError] = useState('');
+    const [cancelingId, setCancelingId] = useState('');
+
+    const reservationMap = useMemo(
+        () => new Map(reservations.map((reservation) => [reservation.id, reservation])),
+        [reservations]
+    );
+
+    const matchedPayments = useMemo(
+        () => payments.filter((payment) => payment.reservationId && reservationMap.has(payment.reservationId)),
+        [payments, reservationMap]
+    );
 
     useEffect(() => {
         loadData();
-    }, []);
+    }, [user?.id]);
 
     const loadData = async () => {
+        if (!user?.id) {
+            setReservations([]);
+            setPayments([]);
+            setLoading(false);
+            return;
+        }
+
         setLoading(true);
+        setLoadError('');
         try {
-            const [resRes, payRes] = await Promise.all([getReservations(), getPayments()]);
-            setReservations(resRes.data);
-            setPayments(payRes.data);
-        } catch {
-            setReservations(DEMO_RESERVATIONS);
-            setPayments(DEMO_PAYMENTS);
+            const [resRes, payRes] = await Promise.all([getReservations(user.id), getPayments()]);
+            const nextReservations = Array.isArray(resRes.data) ? resRes.data : [];
+            const nextReservationIds = new Set(nextReservations.map((reservation) => reservation.id));
+            const nextPayments = Array.isArray(payRes.data)
+                ? payRes.data.filter((payment) => payment.reservationId && nextReservationIds.has(payment.reservationId))
+                : [];
+
+            setReservations(nextReservations);
+            setPayments(nextPayments);
+        } catch (err) {
+            setReservations([]);
+            setPayments([]);
+            setLoadError(err.response?.data?.message || '예약 및 결제 내역을 불러오지 못했습니다.');
         } finally {
             setLoading(false);
         }
     };
 
     const statusLabel = (status) => {
-        const map = { confirmed: '확정', pending: '대기', cancelled: '취소', completed: '완료' };
+        const map = { confirmed: '확정', pending: '대기', cancelled: '취소', completed: '완료', failed: '실패' };
         return map[status] || status;
     };
 
     const statusClass = (status) => {
-        const map = { confirmed: 'status-confirmed', pending: 'status-pending', cancelled: 'status-cancelled', completed: 'status-completed' };
+        const map = { confirmed: 'status-confirmed', pending: 'status-pending', cancelled: 'status-cancelled', completed: 'status-completed', failed: 'status-cancelled' };
         return map[status] || '';
+    };
+
+    const canCancel = (reservation) => !['cancelled'].includes(reservation.status);
+
+    const handleCancelReservation = async (reservation) => {
+        const confirmed = window.confirm(`${reservation.departure} → ${reservation.arrival} 예약을 취소할까요?`);
+        if (!confirmed) {
+            return;
+        }
+
+        setCancelingId(reservation.id);
+        setActionError('');
+
+        try {
+            await cancelReservationPayment(reservation.id);
+            await loadData();
+        } catch (err) {
+            setActionError(err.response?.data?.message || '예약 취소에 실패했습니다.');
+        } finally {
+            setCancelingId('');
+        }
     };
 
     return (
@@ -73,6 +113,17 @@ export default function MyPage() {
                         결제 내역
                     </button>
                 </div>
+
+                {(loadError || actionError) && (
+                    <div className="mypage-alert">
+                        <span>{loadError || actionError}</span>
+                        {loadError && (
+                            <button type="button" onClick={loadData}>
+                                다시 시도
+                            </button>
+                        )}
+                    </div>
+                )}
 
                 {loading ? (
                     <div className="mypage-loading">
@@ -117,6 +168,16 @@ export default function MyPage() {
                                             </div>
                                             <div className="res-footer">
                                                 <span className="res-price">₩{r.totalPrice.toLocaleString()}</span>
+                                                {canCancel(r) && (
+                                                    <button
+                                                        type="button"
+                                                        className="res-cancel-btn"
+                                                        onClick={() => handleCancelReservation(r)}
+                                                        disabled={cancelingId === r.id}
+                                                    >
+                                                        {cancelingId === r.id ? '취소 중...' : '예약 취소'}
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
                                     ))
@@ -127,13 +188,16 @@ export default function MyPage() {
                         {/* Payments */}
                         {tab === 'payments' && (
                             <div className="payment-list">
-                                {payments.length === 0 ? (
+                                {matchedPayments.length === 0 ? (
                                     <div className="empty-state">
                                         <span className="empty-icon">—</span>
                                         <h3>결제 내역이 없습니다</h3>
                                     </div>
                                 ) : (
-                                    payments.map((p) => (
+                                    matchedPayments.map((p) => {
+                                        const reservation = reservationMap.get(p.reservationId);
+
+                                        return (
                                         <div key={p.id} className="payment-history-card card">
                                             <div className="ph-header">
                                                 <span className="ph-id">{p.id}</span>
@@ -145,6 +209,10 @@ export default function MyPage() {
                                                 <div className="ph-row">
                                                     <span className="ph-label">예약 번호</span>
                                                     <span>{p.reservationId}</span>
+                                                </div>
+                                                <div className="ph-row">
+                                                    <span className="ph-label">노선</span>
+                                                    <span>{reservation.departure} → {reservation.arrival}</span>
                                                 </div>
                                                 <div className="ph-row">
                                                     <span className="ph-label">결제 수단</span>
@@ -159,7 +227,8 @@ export default function MyPage() {
                                                 <span className="ph-amount">₩{p.amount.toLocaleString()}</span>
                                             </div>
                                         </div>
-                                    ))
+                                        );
+                                    })
                                 )}
                             </div>
                         )}
