@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { normalizeFlightBrand } from '../utils/brand';
 import './Booking.css';
 
 export default function Booking() {
@@ -8,7 +9,7 @@ export default function Booking() {
     const navigate = useNavigate();
     const { status, isAuthenticated } = useAuth();
 
-    const flight = location.state?.flight || null;
+    const flight = normalizeFlightBrand(location.state?.flight) || null;
 
     const passengerCount = location.state?.passengers || 1;
     const date = location.state?.date || new Date().toISOString().split('T')[0];

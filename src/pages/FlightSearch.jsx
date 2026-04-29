@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { searchFlights } from '../api/flights';
 import { AIRPORT_OPTIONS } from '../data/airports';
+import { normalizeFlightBrand } from '../utils/brand';
 import './FlightSearch.css';
 
 // Demo data for when backend is not available
@@ -110,13 +111,13 @@ export default function FlightSearch() {
         setSearched(true);
         try {
             const res = await searchFlights({ departure, arrival, date, passengers });
-            setFlights(res.data);
+            setFlights(Array.isArray(res.data) ? res.data.map(normalizeFlightBrand) : []);
         } catch {
             // Use demo data when backend isn't available
             let filtered = DEMO_FLIGHTS;
             filtered = filtered.filter((flight) => flight.departure === departure);
             filtered = filtered.filter((flight) => flight.arrival === arrival);
-            setFlights(filtered);
+            setFlights(filtered.map(normalizeFlightBrand));
         } finally {
             setLoading(false);
         }
@@ -129,7 +130,7 @@ export default function FlightSearch() {
     });
 
     const handleSelectFlight = (flight) => {
-        navigate(`/booking/${flight.id}`, { state: { flight, passengers, date } });
+        navigate(`/booking/${flight.id}`, { state: { flight: normalizeFlightBrand(flight), passengers, date } });
     };
 
     return (

@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createPayment } from '../api/payment';
+import { normalizeFlightBrand } from '../utils/brand';
 import './Payment.css';
 
 export default function Payment() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const flight = location.state?.flight;
+    const flight = normalizeFlightBrand(location.state?.flight);
     const passengers = location.state?.passengers || [];
     const date = location.state?.date || '';
 

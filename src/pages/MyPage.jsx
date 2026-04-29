@@ -8,6 +8,7 @@ import {
     getPayments,
     getReservationHistory,
 } from '../api/payment';
+import { normalizeFlightBrand, normalizeFlightNo } from '../utils/brand';
 import './MyPage.css';
 
 export default function MyPage() {
@@ -39,7 +40,12 @@ export default function MyPage() {
         setLoadError('');
         try {
             const res = await getReservationHistory();
-            const nextReservations = Array.isArray(res.data?.reservations) ? res.data.reservations : [];
+            const nextReservations = Array.isArray(res.data?.reservations)
+                ? res.data.reservations.map((reservation) => ({
+                    ...reservation,
+                    flightNo: normalizeFlightNo(reservation.flightNo),
+                }))
+                : [];
             const nextPayments = Array.isArray(res.data?.payments) ? res.data.payments : [];
 
             setReservations(nextReservations);
@@ -82,7 +88,7 @@ export default function MyPage() {
                 if (payment.flightId) {
                     try {
                         const flightRes = await getFlightDetail(payment.flightId);
-                        flight = flightRes.data;
+                        flight = normalizeFlightBrand(flightRes.data);
                     } catch {
                         flight = null;
                     }
@@ -90,7 +96,7 @@ export default function MyPage() {
 
                 return {
                     id: payment.reservationId,
-                    flightNo: flight?.flightNo || '-',
+                    flightNo: normalizeFlightNo(flight?.flightNo) || '-',
                     departure: flight?.departure || '-',
                     arrival: flight?.arrival || '-',
                     date: payment.travelDate || '-',
