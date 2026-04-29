@@ -1,6 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cancelReservationPayment, getReservationHistory } from '../api/payment';
+import { getFlightDetail } from '../api/flights';
+import { cancelReservation } from '../api/reservations';
+import {
+    cancelReservationPayment,
+    getPaymentStatus,
+    getPayments,
+    getReservationHistory,
+} from '../api/payment';
 import './MyPage.css';
 
 export default function MyPage() {
@@ -38,12 +45,69 @@ export default function MyPage() {
             setReservations(nextReservations);
             setPayments(nextPayments);
         } catch (err) {
-            setReservations([]);
-            setPayments([]);
-            setLoadError(err.response?.data?.message || '예약 및 결제 내역을 불러오지 못했습니다.');
+            try {
+                const fallback = await loadPaymentBackedHistory();
+                setReservations(fallback.reservations);
+                setPayments(fallback.payments);
+            } catch (fallbackErr) {
+                setReservations([]);
+                setPayments([]);
+                setLoadError(fallbackErr.response?.data?.message || err.response?.data?.message || '예약 및 결제 내역을 불러오지 못했습니다.');
+            }
         } finally {
             setLoading(false);
         }
+    };
+
+    const loadPaymentBackedHistory = async () => {
+        const payRes = await getPayments();
+        const basePayments = Array.isArray(payRes.data)
+            ? payRes.data.filter((payment) => (
+                payment.reservationId && ['completed', 'cancelled'].includes(payment.status)
+            ))
+            : [];
+        const detailedPayments = await Promise.all(
+            basePayments.map(async (payment) => {
+                try {
+                    const detailRes = await getPaymentStatus(payment.id);
+                    return { ...payment, ...detailRes.data };
+                } catch {
+                    return payment;
+                }
+            })
+        );
+        const nextReservations = await Promise.all(
+            detailedPayments.map(async (payment) => {
+                let flight = null;
+                if (payment.flightId) {
+                    try {
+                        const flightRes = await getFlightDetail(payment.flightId);
+                        flight = flightRes.data;
+                    } catch {
+                        flight = null;
+                    }
+                }
+
+                return {
+                    id: payment.reservationId,
+                    flightNo: flight?.flightNo || '-',
+                    departure: flight?.departure || '-',
+                    arrival: flight?.arrival || '-',
+                    date: payment.travelDate || '-',
+                    departureTime: flight?.departureTime || '-',
+                    status: payment.status === 'cancelled' ? 'cancelled' : 'confirmed',
+                    passengerCount: payment.passengerCount || 1,
+                    totalPrice: payment.amount || 0,
+                    createdAt: payment.createdAt,
+                    payment,
+                };
+            })
+        );
+
+        return {
+            reservations: nextReservations,
+            payments: detailedPayments,
+        };
     };
 
     const statusLabel = (status) => {
@@ -68,7 +132,11 @@ export default function MyPage() {
         setActionError('');
 
         try {
-            await cancelReservationPayment(reservation.id);
+            try {
+                await cancelReservationPayment(reservation.id);
+            } catch (paymentCancelErr) {
+                await cancelReservation(reservation.id);
+            }
             await loadData();
         } catch (err) {
             setActionError(err.response?.data?.message || '예약 취소에 실패했습니다.');
